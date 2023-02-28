@@ -36,7 +36,43 @@ function parseTcpStringAsHttpRequest(string) {
     };
 }
 
+function outputHttpResponse(statusCode, statusMessage, headers, body) {
+ const line = `HTTP/1.1 ${statusCode} ${statusMessage}
+${Object.keys(headers).reduce((target,item)=>
+target += `${item} : ${headers[item]}\n`
+, "")}
 
+${body}`;
+
+   console.log(line);
+}
+
+function processHttpRequest(method, uri, headers, body) { 
+       let statusCode ,statusMessage;
+    if (method === "GET" && /^\/sum\?nums=(\d,)*/.test(uri)) {
+        statusCode = 200;
+        statusMessage="OK";
+        body = uri.match(/\d/g).reduce((target, item) =>
+        +target + (+item));
+    } else if(!/^\/sum.*/.test(uri)){ 
+        statusCode = 405;
+        statusMessage="Not Found";
+        body= "Not Found";
+    } else if(method!=="GET" || !/^\/sum\/num*/.test(uri)){
+        statusCode = 400;
+        statusMessage="Bad Request";
+        body= "Bad Request";
+    }
+    headers = {
+        "Date": new Date(),
+        "Server": "Apache/2.2.14 (Win32)",
+        Connection: "Closed",
+        "Content-Type": "text/html; charset=utf-8",
+        "Content-Length": body.toString().length,
+    };
+    outputHttpResponse(statusCode, statusMessage, headers, body);
+}
 
 http = parseTcpStringAsHttpRequest(contents);
-console.log(JSON.stringify(http, undefined, 2));
+//console.log(JSON.stringify(http, undefined, 2));
+processHttpRequest(http.method, http.uri, http.headers, http.body);

@@ -37,39 +37,83 @@ function parseTcpStringAsHttpRequest(string) {
 }
 
 function outputHttpResponse(statusCode, statusMessage, headers, body) {
- const line = `HTTP/1.1 ${statusCode} ${statusMessage}
-${Object.keys(headers).reduce((target,item)=>
-target += `${item} : ${headers[item]}\n`
-, "")}
+    const line = `HTTP/1.1 ${statusCode} ${statusMessage}
+${Object.keys(headers).reduce((target, item) =>
+        target += `${item} : ${headers[item]}\n`
+        , "")}
 
 ${body}`;
 
-   console.log(line);
+    console.log(line);
 }
+//1.2.3
+//function processHttpRequest(method, uri, headers, body) { 
+//       let statusCode ,statusMessage;
+//    if (method === "GET" && /^\/sum\?nums=(\d,)*/.test(uri)) {
+//        statusCode = 200;
+//        statusMessage="OK";
+//        body = uri.match(/\d/g).reduce((target, item) =>
+//      +target + (+item));
+//    } else if(!/^\/sum.*/.test(uri)){ 
+//        statusCode = 405;
+//        statusMessage="Not Found";
+//        body= "Not Found";
+//    } else if(method!=="GET" || !/^\/sum\/num*/.test(uri)){
+//        statusCode = 400;
+//        statusMessage="Bad Request";
+//       body= "Bad Request";
+//    }
+//    headers = {
+//        "Date": new Date(),
+//        "Server": "Apache/2.2.14 (Win32)",
+//        Connection: "Closed",
+//        "Content-Type": "text/html; charset=utf-8",
+//        "Content-Length": body.toString().length,
+//    };
+//    outputHttpResponse(statusCode, statusMessage, headers, body);
+//}
 
-function processHttpRequest(method, uri, headers, body) { 
-       let statusCode ,statusMessage;
-    if (method === "GET" && /^\/sum\?nums=(\d,)*/.test(uri)) {
+//1.2.4
+function processHttpRequest($method, $uri, $headers, $body) {
+
+    let statusCode, statusMessage, user = {}, body, text;
+
+    [user.login, user.password] = $body.split("&").map((line) => {
+        return line.match(/(?<==).*/).shift();
+    });
+
+    const regex = new RegExp(`${user.login}:${user.password}`);
+
+    try {
+        text = require("fs").readFileSync("passwords.txt").toString().split("\r\n");
         statusCode = 200;
-        statusMessage="OK";
-        body = uri.match(/\d/g).reduce((target, item) =>
-        +target + (+item));
-    } else if(!/^\/sum.*/.test(uri)){ 
-        statusCode = 405;
-        statusMessage="Not Found";
-        body= "Not Found";
-    } else if(method!=="GET" || !/^\/sum\/num*/.test(uri)){
-        statusCode = 400;
-        statusMessage="Bad Request";
-        body= "Bad Request";
+        statusMessage = "OK";
+    } catch (error) {
+        console.log(error.message);
+        statusCode = 500;
+        statusMessage = "Internal Server Error";
     }
-    headers = {
-        "Date": new Date(),
-        "Server": "Apache/2.2.14 (Win32)",
+
+    if ($uri !== "/api/checkLoginAndPassword") {
+        statusCode = 404;
+        statusMessage = "Not Found";
+    } else if ($headers["Content-Type"] !== "application/x-www-form-urlencoded") {
+        statusCode = 400;
+        statusMessage = "Bad Request";
+    } else if (!regex.test(text)) {
+        statusCode = 400;
+        statusMessage = "Not Found the User";
+    }
+    body = regex.test(text) ? `<h1 style="color:green">FOUND</h1>` : "Not Found the User"
+
+
+    let headers = {
+        Server: "Apache/2.2.14 (Win32)",
+        "Content-Length": body.length,
         Connection: "Closed",
         "Content-Type": "text/html; charset=utf-8",
-        "Content-Length": body.toString().length,
     };
+
     outputHttpResponse(statusCode, statusMessage, headers, body);
 }
 

@@ -17,7 +17,6 @@ function parseText(csv) {
         }, {});
     //   console.log(cities );
 
-
     return text => text.replace(new RegExp(Object.keys(cities).join("|"), "g"), city =>
         `${city} (${cities[city].rating} место в ТОП-10 самых крупных городов Украины, население ${cities[city].population} человек)`);
 
@@ -31,4 +30,3 @@ let csv = `44.38,34.33,Алушта,3140040,\n49.46,30.17,Біла Церква,
 44.38,34.33,Алуштавввв,31\n49.46,30.17,Білаяпк Церква,29900,\n #некоммен`
 const fun = parseText(csv);
 let str = 'Алушта і Біла Церква';
-console.log(fun(str));

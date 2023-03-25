@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>frontend JS</title>
+    <style>
+        #square {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            background-color: black;
+            float: left;
+            margin-right: 10px;
+        }
+
+        #yellowSquare {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+
+        #redSquare {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+
+        #greenRectangle {
+            width: 50px;
+            height: 20px;
+            background-color: green;
+        }
+
+        .topRight {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+
+        #squareGrey {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: grey;
+        }
+        .overflow-hidden {
+            overflow: hidden;
+        }
+        .dragzone {
+  color: darkgreen;
+  cursor: pointer;
+  border: 5px dashed grey;
+  background-color: rgba(131, 164, 255, 0.925);
+  transform: scale(1.1);
+}
+    </style>
+</head>
+<!-- TASK 10 -->
+
+<body onmousemove="positoinMouse(document.getElementById(`position`),event)">
+    <div id="square"></div>
+    <!-- TASK 1 -->
+    <h8>TASK 1 </h8>
+    <div>
+        <button onclick="document.getElementById('square').style.display = 'none'"> CSS </button>
+        <button onclick="remove()"> JS </button>
+        <button onclick="hiddenEl('square')"> JS+CSS </button>
+    </div>
+    <!-- TASK 2 -->
+    <h8>TASK 2 </h8>
+    <div>
+        <button onclick="hiddenEl1()"> Switch </button>
+    </div>
+    <div class="square"></div>
+    <div class="square"></div>
+    <div class="square"></div>
+    <div class="square"></div>
+    <div class="square"></div>
+    <!-- TASK 3 -->
+    <div style=margin-top:100px;">
+        <h8>TASK 3 </h8>
+    </div>
+    <div></div>
+    <button onclick="hiddenEl2()"> 5 Square </button>
+    </div>
+    <!-- TASK 4 -->
+    <div>
+        <h8>TASK 4 </h8>
+    </div>
+    <div>
+        <input type="text" id="selector">
+        <button onclick="hiddenSelector()"> Selector </button>
+    </div>
+    <!-- TASK 5 -->
+    <div>
+        <h8>TASK 5 </h8>
+    </div>
+    <div id="yellowSquare" onclick="alertAndRemove()"></div>
+    </div>
+    <!-- TASK 6 -->
+    <div>
+        <h8>TASK 6 </h8>
+    </div>
+    <div>
+        <button onmouseover="moveOnButton('redSquare')" onmouseleave="moveOnButton('redSquare')"> redSquare </button>
+        <div class="hidden" id="redSquare"></div>
+    </div>
+    <!-- TASK 7 -->
+    <div>
+        <h8>TASK 7 </h8>
+    </div>
+    <div>
+        <input onfocus="moveOnButton('greenRectangle')" oninput="hiddenEl('greenRectangle')" type="text" id="input">
+        <div class="hidden" id="greenRectangle"></div>
+    </div>
+    <!-- TASK 8 -->
+    <div>
+        <h8>TASK 8 </h8>
+    </div>
+    <div>
+        <input type="text" id="inputImage">
+        <button onclick="summoningTechnique(document.getElementById(`inputImage`))">summoningTechnique </button>
+    </div>
+    <!-- TASK 9 -->
+    <div>
+        <h8>TASK 9 </h8>
+    </div>
+    <div>
+        <textarea id="textarea"> </textarea>
+        <button onclick="summoningTechniqueTextArea(document.getElementById(`textarea`))">summoningTechniqueTextArea
+        </button>
+    </div>
+    <!-- TASK 10 -->
+    <div class="topRight">
+        <h8>TASK 10 </h8>
+        <div id="position"></div>
+        <!-- TASK 11 -->
+        <h8>TASK 11 </h8>
+        <p id="language">Language: </p>
+        <!-- TASK 11 -->
+        <h8>TASK 12 </h8>
+        <p id="geoPosition">geoPosition: </p>
+    </div>
+    <!-- TASK 13 -->
+    <div>
+        <h8>TASK 13 </h8>
+    </div>
+    <div id="localStorage" contenteditable="true" oninput="setlocalStorage( document.getElementById(`localStorage`))">
+    </div>
+    <div id="cookies" contenteditable="true" oninput="setCookies( document.getElementById(`cookies`))"> </div>
+    <div id="sessionStorage" contenteditable="true"
+        oninput="setsessionStorage( document.getElementById(`sessionStorage`))"></div>
+    <!-- TASK 14 -->
+    <div>
+        <h8>TASK 14 </h8>
+    </div>
+    <div>
+        <button id="scrolUP" style="display:none" onclick="goUP()">Go UP</button>
+    </div>
+    <!-- TASK 15 -->
+    <div>
+        <h8>TASK 15 </h8>
+    </div>
+    <div onclick="alert(`Внешний блок`)" style="background-color: rgb(49, 136, 194); width: 100px; height: 100px">
+        Внешний блок
+        <div onclick="inBox(event)" style="background-color: green; width: 50px; height: 50px"> Внутренний Блок </div>
+    </div>
+    <!-- TASK 16 -->
+    <div>
+        <h8>TASK 16 </h8>
+    </div>
+    <div>
+        <button id="buttonsquareGrey" onclick="squareGrey(`squareGrey`)">Grey Square</button>
+        <div id="squareGrey" class="hidden" onclick="squareGrey(`squareGrey`)"></div>
+    </div>
+      <!-- TASK 17 -->
+      <div>
+        <h8>TASK 17 </h8>
+    </div>
+    <div> 
+        <form><input onclick="return false" type="submit" value="GO" ></form>
+    </div>
+          <!-- TASK 18 -->
+          <div>
+            <h8>TASK 18 </h8>
+        </div>
+        <div>  
+      <input id="upload-label" type="file" onmouseenter="changeDropZone(event)" onmouseleave="changeDropZone(event)" ondragenter="changeDropZone(event)" ondragleave="changeDropZone(event)">
+        </div>
+    <script >
+        
+
+function remove() { document.getElementById('square').remove(); }
+function hiddenEl(id) { document.getElementById(id).classList = "hidden"; }
+function hiddenEl1() { document.getElementById('square').classList.toggle("hidden"); }
+function hiddenEl2() { Array.from(document.getElementsByClassName('square')).map((el) => el.classList.toggle("hidden")) }
+function hiddenSelector() {
+    Array.from(document.querySelectorAll(document.getElementById('selector').value)).map(
+        el => el.classList.toggle("hidden"))
+}
+function alertAndRemove() {
+    alert("hello");
+    let element = document.getElementById("yellowSquare");
+    element.onclick = () => element.classList.toggle("hidden");
+}
+function moveOnButton(id) {
+    document.getElementById(id).classList.toggle("hidden");
+}
+function summoningTechnique(id) {
+    let img = document.createElement("img");
+    img.src = id.value;
+    document.body.appendChild(img);
+}
+function summoningTechniqueTextArea(id) {
+    id.value.split("\n").map(el => {
+        el.trim()
+        let img = document.createElement("img");
+        img.src = el;
+        document.body.appendChild(img);
+    });
+}
+function positoinMouse(id, event) {
+    id.innerHTML = `Х: ${event.clientX}, У: ${event.clientY} `
+}
+onload = function () {
+    //task 11------------------------
+    document.getElementById("language").innerHTML += window.navigator.language;
+    //task 12------------------------
+    window.navigator.geolocation.getCurrentPosition(function (position) {
+        document.getElementById("geoPosition").innerHTML += `Ш: ${position.coords.latitude}, Д: ${position.coords.longitude}`;
+    }, function (error) {
+        console.log("has bloked");
+    });
+    //task 13.1------------------------
+    document.getElementById(`localStorage`).innerHTML = localStorage.getItem("localStorage");
+    //task 13.2------------------------
+    document.getElementById(`cookies`).innerHTML = document.cookie
+    //task 13.3------------------------
+    document.getElementById(`sessionStorage`).innerHTML = sessionStorage.getItem("sessionStorage");
+}
+
+//task 13.1------------------------
+function setlocalStorage(el) {
+    localStorage.setItem("localStorage", el.innerHTML);
+}
+//task 13.2------------------------
+function setCookies(el) {
+    document.cookie = el.innerHTML;
+}
+//task 13.3------------------------
+function setsessionStorage(el) {
+    sessionStorage.setItem("sessionStorage", el.innerHTML)
+}
+//task 14--------------------------
+onscroll = () => {
+    if (window.scrollY >= 79) {
+        document.getElementById("scrolUP").style.display = "block";
+      } else {
+        document.getElementById("scrolUP").style.display = "none";
+      }
+}
+function goUP(){
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+//task 15--------------------------
+function inBox(event){
+    alert("Внутренний Блок");
+    event.stopPropagation();
+}
+//task 16--------------------------
+function squareGrey(id){
+    document.getElementById(id).classList.toggle(`hidden`);
+    document.body.classList.toggle(`overflow-hidden`);;
+}
+//task 18--------------------------
+function changeDropZone() {
+    document.getElementById("upload-label").classList.toggle("dragzone");
+  }
+    </script>
+</body>
+
+</html>

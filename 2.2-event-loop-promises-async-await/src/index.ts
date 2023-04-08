@@ -121,12 +121,12 @@ findWoman1().then(user => console.log(`THe woman's name 4.2 is ${user.name} Her 
 Create an escapeable function #2 that uses function #1
 */
 
-async function func1(callback : (ip : string) => void){
-  let text = await fetch(param).then(res=>res.json()).then(res=>res.ip)
+async function func1(callback: (ip: string) => void) {
+  let text = await fetch(param).then(res => res.json()).then(res => res.ip)
   callback(text)
 }
-async function func2(){
-  func1(ip=>console.log("func2 assignment 5 "+ip))
+async function func2() {
+  func1(ip => console.log("func2 assignment 5 " + ip))
 }
 func2()
 
@@ -137,10 +137,10 @@ and which takes one parameter as input - a callback function that will be called
 with the first parameter equal to this ip.
 */
 
- async function func12(param: string) : Promise<string>{
-   return await fetch(param).then(res=>res.json()).then(res=>res.ip)
+async function func12(param: string): Promise<string> {
+  return await fetch(param).then(res => res.json()).then(res => res.ip)
 }
-async function func22(callback : (ip : string)=>void) : Promise<void> {
- callback(await func12(param))
+async function func22(callback: (ip: string) => void): Promise<void> {
+  callback(await func12(param))
 }
-func22(res=>console.log("func22 assignment 6 "+res))
+func22(res => console.log("func22 assignment 6 " + res))

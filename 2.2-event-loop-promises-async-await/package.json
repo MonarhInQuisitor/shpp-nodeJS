@@ -1,0 +1,13 @@
+{
+  "name": "2.2-event-loop-promises-async-await",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rd /s /q dist && tsc",
+"start": "node dist/index.js"
+  },
+  "author": "Tsap Dmytro",
+  "license": "ISC"
+}

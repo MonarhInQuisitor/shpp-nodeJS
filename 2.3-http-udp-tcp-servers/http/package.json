@@ -1,0 +1,20 @@
+{
+  "name": "http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rd /s /q dist && tsc",
+    "start": "node dist/server.js && node dist/client.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.13"
+  }
+}
